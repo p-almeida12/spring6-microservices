@@ -16,9 +16,7 @@ import java.math.BigDecimal;
 @RequiredArgsConstructor
 public class CurrencyExchangeController {
 
-    @Autowired
-    private Environment environment;
-
+    private final Environment environment;
     private final CurrencyExchangeService currencyExchangeService;
 
     @GetMapping("/currency-exchange/from/{from}/to/{to}")

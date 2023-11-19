@@ -4,6 +4,9 @@ import com.springmicroservices.currencyconversionservice.model.CurrencyConversio
 import com.springmicroservices.currencyconversionservice.proxy.CurrencyExchangeProxy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,10 +16,12 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 @RestController
+@RequiredArgsConstructor
 public class CurrencyConversionController {
 
-    @Autowired
-    private CurrencyExchangeProxy currencyExchangeProxy;
+    private final CurrencyExchangeProxy currencyExchangeProxy;
+
+    private final RestTemplate restTemplate;
 
     //USING FEIGN CLIENT
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
@@ -47,7 +52,7 @@ public class CurrencyConversionController {
         uriVariables.put("from", from);
         uriVariables.put("to", to);
 
-        CurrencyConversion currencyConversion = new RestTemplate()
+        CurrencyConversion currencyConversion = restTemplate
                 .getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}",
                         CurrencyConversion.class,
                         uriVariables).getBody();

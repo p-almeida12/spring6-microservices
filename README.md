@@ -14,6 +14,7 @@ some tools to build scalable, resilient, and maintainable microservices.
 | Currency Conversion Service       | 8100, 8101, ... |
 | Netflix Eureka Service Registry   | 8761            |
 | API Gateway                       | 8765            |
+| Zipkin Distributed Tracing Server | 9411            |
 
 ## Important URLs
 
@@ -160,3 +161,54 @@ watch -n X curl [insert URL here]
 ```
 
 Replace X with the number of requests per second and the [insert URL here] with the request URL.
+
+## Zipkin Distributed Tracing Server
+
+Zipkin is an open-source distributed tracing system. Distributed tracing helps to understand 
+how services within a distributed system interact with each other during a request. It collects 
+and displays timing data, showing how long each component took to process a request and 
+provides insights into the system's performance and bottlenecks.
+
+Zipkin uses a concept called "spans" to represent individual timed operations within a 
+distributed system.
+Spans are organized into traces,
+which represent the entire journey of a request as it propagates through different services.
+Each span contains metadata like a unique identifier, timestamp, duration,
+and other contextual information.
+
+When a request enters a system,
+a trace is initiated and assigned a unique ID. As the request moves through various services,
+each service adds its own span to the trace, including information like processing time,
+any errors encountered, and additional metadata.
+This allows developers and system administrators
+to visualize the path and performance of the request across different services.
+Imagine you make a request, that goes to microservice 1 and then to microservice 2 and that 
+request is taking a lot of time to complete. Using zipkin we can analyze the trace and 
+understand where is the request being held up.
+
+So by using Zipkin or similar distributed tracing systems, we can identify performance 
+issues, optimize service dependencies, and troubleshoot problems within complex distributed 
+architectures.
+
+In Spring Boot 2, the zipkin server used the Spring Cloud Sleuth, but in Spring Boot 3 is now 
+used the Micrometer Tracing. This is because Sleuth can only handle traces and Micrometer, on 
+the other hand, can handle traces, metrics and logs, making it more complete than its predecessor.
+
+
+```mermaid
+graph TD;
+    api-gateway-->distributed-tracing-server;
+    currency-exchange-service-->distributed-tracing-server;
+    currency-conversion-service-->distributed-tracing-server;
+    distributed-tracing-server-->DB;
+```
+
+We can run zipkin distributed tracing server on a container using docker:
+
+```
+docker run -d -p 9411:9411 openzipkin/zipkin
+```
+
+By running this command, we're deploying a new container with the zipkin distributed tracing 
+on port 9411, fetching it from the [docker hub](https://hub.docker.com/r/openzipkin/zipkin).
+
