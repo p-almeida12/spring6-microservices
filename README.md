@@ -212,3 +212,45 @@ docker run -d -p 9411:9411 openzipkin/zipkin
 By running this command, we're deploying a new container with the zipkin distributed tracing 
 on port 9411, fetching it from the [docker hub](https://hub.docker.com/r/openzipkin/zipkin).
 
+## Docker
+
+### Building Docker Images
+
+1. Navigate to Each Microservice Directory
+
+Replace <microservice_directory_path> with the actual path to each microservice directory.
+
+```
+cd <microservice_directory_path> 
+```
+
+2. Build Docker Images for Each Service
+
+Run the following commands in each microservice directory:
+
+```
+docker build -t spring6-currency-exchange-service .    
+docker build -t spring6-currency-conversion-service .    
+docker build -t spring6-api-gateway .    
+docker build -t spring6-service-registry .    
+docker build -t spring6-currency-exchange-service .    
+docker build -t spring6-currency-exchange-service .    
+```
+
+### Running Containers Using Docker Compose
+
+1. Navigate to the Project's Root Directory
+
+```
+cd <project_root_directory_path>
+```
+
+2. Running Containers Using Docker Compose
+
+Execute the following command in the project's root directory:
+
+```
+docker-compose up  
+```
+
+This command will orchestrate the containers for your microservices based on the images created.

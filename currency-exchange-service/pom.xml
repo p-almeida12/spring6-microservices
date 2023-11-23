@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.springmicroservices</groupId>
 	<artifactId>currency-exchange-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>currency-exchange-service</name>
 	<description>Currency Exchange Service Project</description>
 	<properties>

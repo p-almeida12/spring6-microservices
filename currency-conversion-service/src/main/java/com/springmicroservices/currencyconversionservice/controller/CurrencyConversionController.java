@@ -53,7 +53,7 @@ public class CurrencyConversionController {
         uriVariables.put("to", to);
 
         CurrencyConversion currencyConversion = restTemplate
-                .getForEntity("http://localhost:8000/currency-exchange/from/{from}/to/{to}",
+                .getForEntity("http://currency-exchange:8000/currency-exchange/from/{from}/to/{to}",
                         CurrencyConversion.class,
                         uriVariables).getBody();
 
